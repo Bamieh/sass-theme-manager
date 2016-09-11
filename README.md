@@ -1,6 +1,14 @@
 # Sass Theme manager
 This tiny sass helper offers a convenient way to manage your styleguide and themes using sass maps.
 
+##Installation
+
+```
+  npm install sass-theme-manager --save-dev
+```
+
+Then include the index.scss file from the package.
+
 ##Usage
 Themes can be set per component basis, and globally for styleguide theme management.
 

@@ -1,6 +1,6 @@
 {
   "name": "sass-theme-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sass theme manager",
   "main": "index.scss",
   "repository": {
