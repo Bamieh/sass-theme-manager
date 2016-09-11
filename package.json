@@ -1,0 +1,26 @@
+{
+  "name": "sass-theme-manager",
+  "version": "1.0.0",
+  "description": "Sass theme manager",
+  "main": "index.scss",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bamieh/sass-theme-manager.git"
+  },
+  "keywords": [
+    "sass",
+    "themes",
+    "styleguide",
+    "manager",
+    "scss"
+  ],
+  "author": "Ahmad Bamieh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bamieh/sass-theme-manager/issues"
+  },
+  "homepage": "https://github.com/Bamieh/sass-theme-manager#readme",
+  "sass": "index.scss",
+  "scripts": {},
+  "style": "index.scss"
+}

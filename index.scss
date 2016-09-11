@@ -1,0 +1,41 @@
+/*!
+ * Sass Theme Manager v1.0.0
+ * Developed by Ahmad Bamieh
+ * Licensed under MIT (https://github.com/Bamieh/sass-theme-manager/blob/master/LICENSE)
+ */
+
+$themes: ();
+
+@function parse-dotless($class) {
+  $this: quote($class);
+  @return if(str-slice($this, 0, 1) == ".", str-slice($this, 2, str-length($this)), $this);
+}
+
+@function theme($result, $keys...) {
+  $result: parse-dotless($result);
+  @if map-has-key($themes, $result) {
+    $result: map-get($themes, $result);
+  } @else {
+    $firstSelector: (nth(nth(selector-parse(&), 1), 1));
+    $firstKey: $result;
+    $result: map-get($themes, parse-dotless($firstSelector));
+    $result: map-get($result, $firstKey);
+  }
+
+  @each $key in $keys {
+    $result: map-get($result, $key);
+  }
+  @return $result;
+}
+
+@mixin theme($values: (), $override:false) {
+  $key: parse-dotless(#{&});
+  @if $key == "" {
+    $key: "global";
+  }
+  @if map-has-key($themes, $key) and not $override{
+      @warn "Theme `#{$key}` already exists.";
+  } @else {
+    $themes: map-merge($themes, ($key: $values)) !global;
+  }
+};
