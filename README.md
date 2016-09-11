@@ -13,28 +13,27 @@ Themes can be set per component basis, and globally for styleguide theme managem
     )
   ));
   &.header {
-    color: theme()
+    color: theme(header, color);
   }
 }
 ```
 
 ###Globally
 ```scss
-  @include theme((
-    headings: (
-      h1: 2em,
-      h2: 1.8em
-    ),
-    font-family: 'Roboto'
-  ));
+@include theme((
+  headings: (
+    h1: 2em,
+    h2: 1.8em
+  ),
+  font-family: 'Roboto'
+));
 
-  html, body {
-    font-family: theme("global", font-family);
-  }
+html, body {
+  font-family: theme("global", font-family);
+}
 
-  .my-component h1 {
-    font-size: theme("global", headings, h1)
-  }
+.my-component h1 {
+  font-size: theme("global", headings, h1)
 }
 ```
 
@@ -43,7 +42,7 @@ To set a theme for a component, include `theme` mixin inside the component root.
 
 ```scss
 my-component {
-  @include theme((themeMap))
+  @include theme($sassMap)
 }
 ```
 
