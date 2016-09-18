@@ -1,0 +1,43 @@
+/*
+  Global Themes Test cases
+*/
+
+$colors: (
+  primary: red,
+  secondary: white
+);
+
+
+@include theme("colors", $colors);
+
+/*basic*/
+div {
+  color: theme("colors", primary);
+}
+
+/*multiple scopes*/
+.class-one, .class-two {
+  color: theme("colors", primary);
+}
+
+/*support nested classes*/
+.parent {
+  &.secondary {
+    color: theme("colors", secondary);
+  }
+}
+
+/*support child classes*/
+.parent {
+  color: theme("colors", primary);
+  &.secondary {
+    color: theme("colors", secondary);
+  }
+}
+
+/*support bem style*/
+.block {
+  @at-root #{&}--modifier {
+    color: theme("colors", secondary);
+  }
+}

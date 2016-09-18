@@ -1,0 +1,23 @@
+@function get-scope($number) {
+  @if type-of(&) == "null" {
+    @return "global";
+  }
+  
+  $selector-list: nth(selector-parse(&), 1);
+  
+  $number: if($number == first, 1, $number);
+  $number: if($number == last, length($selector-list), $number);
+  $selector: (nth($selector-list, $number));
+  // remove first dot from class if any;
+  @if str-slice($selector, 0, 1) == "." {
+    $selector: str-slice($selector, 2);
+  }
+  
+  // take class before first dot (if any);
+  $dotIndex: str-index($selector, ".");
+  
+  @if type-of($dotIndex) != "null" {
+    $selector: str-slice($selector, 0, $dotIndex - 1);
+  }
+  @return $selector;
+}

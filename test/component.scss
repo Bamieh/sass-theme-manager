@@ -1,0 +1,57 @@
+/*
+  Component Themes Test Cases
+*/
+
+$basic: (
+  color: red,
+  font-size: 14px,
+  line-height: 1,
+  bold: (weight: bold)
+);
+
+
+/*basic*/
+div {
+  @include theme($basic);
+  color: theme(color);
+}
+
+/*multiple scopes*/
+.class-one, .class-two {
+  @include theme($basic);
+  scope: "#{get-scope(first)}";
+  font-size: theme(font-size);
+}
+
+/*support nested classes*/
+.parent {
+  @include theme($basic);
+  &.secondary {
+    scope: "#{get-scope(first)}";
+    color: theme(color);
+  }
+}
+
+/*support child classes*/
+.parent {
+  @include theme($basic);
+  color: theme(color);
+  &.secondary {
+    scope: "#{get-scope(first)}";
+    color: theme(color);
+    &.bold {
+      scope: "#{get-scope(first)}";
+      font-weight: theme(bold, weight);
+    }
+  }
+  
+}
+
+/*support bem style (explicitly)*/
+.block {
+  @include theme($basic);
+  @at-root #{&}--modifier {
+    scope: "#{get-scope(first)}";
+    color: theme("block", color);
+  }
+}

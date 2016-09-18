@@ -1,0 +1,63 @@
+@import "utilities/_get-scope";
+
+// Global variables
+$global-themes: ();
+$component-themes: ();
+
+// Library
+
+@function theme($args...) {
+  $result: ();
+  @if length($args) < 1 {
+    @warn "no arguments speicified / must be string";
+  } @else {
+    @if map-has-key($global-themes, nth($args, 1)) {
+      $result: $global-themes;
+    } @else if map-has-key($component-themes, nth($args, 1)) {
+      $result: $component-themes;
+    } @else {
+      $componentName: get-scope(first);
+      @if map-has-key($component-themes, $componentName) {
+        $result: map-get($component-themes, $componentName);
+      } @else {
+        @return "not found";
+      }
+    }
+    @each $key in $args {
+      @if map-has-key($result, $key) {
+        $result: map-get($result, $key);
+      } @else {
+        @return "not found";
+      }
+    }
+  }
+  @return $result;
+}
+
+
+@mixin theme($themeName, $styles: (), $override: false) {
+  // get the scope the mixin is invoked at (last selector if any).
+  $scope: get-scope(last);
+  @if type-of($scope) == "global" {
+    @if type-of($themeName) != "string" {
+      @warn "no key speicified / must be string";
+    } @else if type-of($styles) != "map" {
+      @warn "no value speicified for #{$themeName}.";
+    } @else if map-has-key($global-themes, $themeName) and not $override {
+      @warn "global #{$themeName} already exists, use override flag.";
+    } @else {
+      $global-themes: map-merge($global-themes, ($themeName: $styles)) !global;
+    }
+  } @else {
+    @if type-of($themeName) == "map" {
+      $override: $styles;
+      $styles: $themeName;
+      $themeName: $scope;
+    }
+    @if map-has-key($component-themes, $themeName) and not $override{
+      @warn "Theme `#{$themeName}` already exists.";
+    } @else {
+      $component-themes: map-merge($component-themes, ($themeName: $styles)) !global;
+    }
+  }
+}
